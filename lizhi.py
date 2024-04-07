@@ -27,7 +27,7 @@ def clean_filename(filename):
     return filename
 
 # 替换为你自己要爬取的主播的主页地址
-url = 'https://www.lizhi.fm/user/××××'
+url = 'https://www.lizhi.fm/user/36376'
 
 # 创建output目录
 if not os.path.exists('./download'):
@@ -56,13 +56,7 @@ while url is not None:
     # 翻页
     next_page_tag = soup.find(attrs={'class':'next'})
     if next_page_tag:
-        next_page_link = next_page_tag['href']
-        match = re.search(r'/(\d{4}/\d{2}/\d{2})/(\d+)', next_page_link)
-        if match:
-            date = match.group(1).replace('/', '-')
-            id = match.group(2)
-            url = 'https://cdn5.lizhi.fm/audio/' + date + '/' + id + '_hd.mp3'
+        url = 'https://www.lizhi.fm' + next_page_tag['href']
     else:
         break
     print("The next page:", url)
-    time.sleep(6)
